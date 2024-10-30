@@ -9,9 +9,71 @@ class TTTBoard:
         board - a list of '*'s, 'X's & 'O's. 'X's represent moves by player 'X', 'O's
             represent moves by player 'O' and '*'s are spots no one has yet played on
     """
+    def __init__(self):
+        global board
+        board=["*","*","*","*","*","*","*","*","*"]
+
+    def __str__(self):
+        global board
+        print(board[0:3],"\n",board[3:6],"\n",board[6:9])
+
+    def make_move(self, player, pos):
+        # VARIABLES
+        global board
+        MoveMade=False
+
+        # Checking if the position on the board exists and is set to "*", then making the move if it is
+        if pos in range(len(board)) and board[pos]=="*":
+            board[pos]=player
+            MoveMade=True
+        return MoveMade
+    
+    def has_won(self,player):
+        # VARIABLES
+        global board
+        Won=False
+        possibleWins=[[0,4,8],[6,4,2],         # DIAGONALS
+                      [0,1,2],[3,4,5],[6,7,8], # STRAIGHT ACROSS
+                      [0,3,6],[1,4,7],[2,5,8]] # STRAIGHT DOWN
+        
+        # Checking possibleWins for matches
+        for i in range(len(possibleWins)):
+
+            # Checking for a continuous run with no instances of possibleWins[i][i2]!=player
+            Blocked=False
+            for i2 in range(len(possibleWins[i])):
+                if board[possibleWins[i][i2]]!=player:
+                    Blocked=True
+                                        
+            # Setting won to true if the current run is continuous, with no instances of possibleWins[i][i2]!=player
+            if Blocked==False:
+                Won=True
+        return Won
+
+    def game_over(self):
+        # VARIABLES
+        global board
+        over=False
+        full=True
+
+        # Checking if board is NOT full
+        for i in range(len(board)):
+            if board[i]=='*':
+                full=False
+        
+        # Setting over=true if the board is full or either player has won
+        if full==True or TTTBoard.has_won(TTTBoard,"X")==True or TTTBoard.has_won(TTTBoard,"O")==True:
+            over=True
+        return over
+    
+    def clear(self):
+        global board
+        board=["*","*","*","*","*","*","*","*","*"]
+    
+
+
 
     pass
-
 
 def play_tic_tac_toe() -> None:
     """Uses your class to play TicTacToe"""
