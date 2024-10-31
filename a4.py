@@ -15,18 +15,17 @@ class TTTBoard:
 
     def __str__(self):
         global board
-        print(board[0:3],"\n",board[3:6],"\n",board[6:9])
+        boardStr=str(board[0:3])+"\n"+str(board[3:6])+"\n"+str(board[6:9])
+        return boardStr
 
     def make_move(self, player, pos):
         # VARIABLES
         global board
-        MoveMade=False
 
         # Checking if the position on the board exists and is set to "*", then making the move if it is
         if pos in range(len(board)) and board[pos]=="*":
             board[pos]=player
-            MoveMade=True
-        return MoveMade
+        return True if pos<len(board) and board[pos]==player else False
     
     def has_won(self,player):
         # VARIABLES
@@ -38,13 +37,14 @@ class TTTBoard:
         
         # Checking possibleWins for matches
         for i in range(len(possibleWins)):
-
+        
             # Checking for a continuous run with no instances of possibleWins[i][i2]!=player
             Blocked=False
             for i2 in range(len(possibleWins[i])):
+
                 if board[possibleWins[i][i2]]!=player:
                     Blocked=True
-                                        
+
             # Setting won to true if the current run is continuous, with no instances of possibleWins[i][i2]!=player
             if Blocked==False:
                 Won=True
@@ -122,6 +122,8 @@ if __name__ == "__main__":
     # here are some tests. These are not at all exhaustive tests. You will DEFINITELY
     # need to write some more tests to make sure that your TTTBoard class is behaving
     # properly.
+
+    
     brd = TTTBoard()
     brd.make_move("X", 8)
     brd.make_move("O", 7)
@@ -147,8 +149,9 @@ if __name__ == "__main__":
     assert brd.has_won("X") == False
     assert brd.has_won("O") == True
     assert brd.game_over() == True
+    
 
     print("All tests passed!")
 
     # uncomment to play!
-    # play_tic_tac_toe()
+    play_tic_tac_toe()
