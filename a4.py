@@ -23,32 +23,31 @@ class TTTBoard:
         global board
 
         # Checking if the position on the board exists and is set to "*", then making the move if it is
-        if pos in range(len(board)) and board[pos]=="*":
+        if pos in range(len(board)) and board[pos]=="*": 
             board[pos]=player
+
+        # Returning True if given position is valid and not taken, otherwise returning False
         return True if pos<len(board) and board[pos]==player else False
     
-    def has_won(self,player):
+
+        
+    def has_won(self, player):
         # VARIABLES
         global board
         Won=False
-        possibleWins=[[0,4,8],[6,4,2],         # DIAGONALS
-                      [0,1,2],[3,4,5],[6,7,8], # STRAIGHT ACROSS
-                      [0,3,6],[1,4,7],[2,5,8]] # STRAIGHT DOWN
-        
-        # Checking possibleWins for matches
-        for i in range(len(possibleWins)):
-        
-            # Checking for a continuous run with no instances of possibleWins[i][i2]!=player
-            Blocked=False
-            for i2 in range(len(possibleWins[i])):
 
-                if board[possibleWins[i][i2]]!=player:
-                    Blocked=True
-
-            # Setting won to true if the current run is continuous, with no instances of possibleWins[i][i2]!=player
-            if Blocked==False:
-                Won=True
+        # Checking if current board index (i) and board index plus a value that increases from 1 to 5 (i2) and 
+        # board index minus that value are all equal to player, then setting Won to true if all of those conditions are met
+        for i in range(len(board)):                
+            for i2 in range(1,5,1):
+                if 0<i-i2<len(board) and 0<i+i2<len(board) and board[i-i2]==board[i]==board[i+i2]==player:
+                    Won=True
+        print(Won)
         return Won
+                    
+
+
+
 
     def game_over(self):
         # VARIABLES
@@ -56,7 +55,8 @@ class TTTBoard:
         over=False
         full=True
 
-        # Checking if board is NOT full
+        # Checking if board is NOT full (Thought it would require less code to check the whole list for *'s and
+        # delete them when you find them than to check if every single item in the list is not an *)
         for i in range(len(board)):
             if board[i]=='*':
                 full=False
