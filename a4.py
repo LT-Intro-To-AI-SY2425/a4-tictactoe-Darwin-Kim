@@ -32,6 +32,11 @@ class TTTBoard:
         # Attempting to run checks on board[pos], then returning false if calling board[pos] results in an index error
         except IndexError:
             return False
+        
+        # ORIGINAL METHOD:
+        #if board[pos]=="*" and pos<len(board):
+        #     board[pos]==player
+        #return True if pos<len(board) and board[pos]==player else False
             
     def has_won(self, player):
         # VARIABLES
@@ -44,6 +49,18 @@ class TTTBoard:
                 if 0<i-i2<len(board) and 0<i+i2<len(board) and board[i-i2]==board[i]==board[i+i2]==player:
                     Won=True
         return Won
+    
+        #ORIGINAL METHOD:
+        # PossibleWins=[(list of possible wins here, forgot what it was and didn't want to type it again, but it's in the format of [scenario 1[position 1, position 2, position 3,]],[scenario 2[position 1, position 2, position 3,]], etc)]
+        # Won=False
+        # for i in range(PossibleWins):
+        #    Win=True
+        #    for i2 in range(PossibleWins[i])
+        #        if player!=board[PossibleWins[i][i2]]:
+        #             Win=False
+        #    if Win=True:
+        #       Won=True
+        # return Won
                     
 
 
@@ -56,6 +73,8 @@ class TTTBoard:
             return True
         else:
             return False
+        
+        # Original method mostly the same, but if conditions are less optomized and more wordy
     
     def clear(self):
         global board
